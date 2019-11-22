@@ -5,7 +5,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-interface DataAccessObject<T> {
+import com.cruat.testng.dbreporter.entities.ReportEntity;
+
+interface DataAccessObject<T extends ReportEntity> {
 	EntityManager geEntityManager();
 	Class<T> getEntityClass();
 	

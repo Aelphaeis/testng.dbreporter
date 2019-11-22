@@ -4,7 +4,9 @@ import java.util.Objects;
 
 import javax.persistence.EntityManager;
 
-public class GenericDAO<T> implements DataAccessObject<T> {
+import com.cruat.testng.dbreporter.entities.ReportEntity;
+
+public class GenericDAO<T extends ReportEntity> implements DataAccessObject<T> {
 	
 	private final EntityManager entityManager;
 	private final Class<T> entityClass;
