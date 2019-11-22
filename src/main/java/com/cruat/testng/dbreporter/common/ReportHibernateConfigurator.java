@@ -1,5 +1,7 @@
 package com.cruat.testng.dbreporter.common;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.EntityManagerFactory;
@@ -8,9 +10,10 @@ import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.MySQL8Dialect;
 
+import com.cruat.testng.dbreporter.entities.ReportEntity;
 import com.cruat.testng.dbreporter.entities.TestNGResults;
 
-class ReportHibernateConfigurator {
+class ReportHibernateConfigurator{
 	
 	private static final String DIALECT = getDialect();
 	private final String url;
@@ -20,12 +23,22 @@ class ReportHibernateConfigurator {
 	}
 	
 	public EntityManagerFactory buildFactory() {
-		return new Configuration()
-				.addAnnotatedClass(TestNGResults.class)
-				.setProperty(AvailableSettings.DIALECT, DIALECT)
-				.setProperty(AvailableSettings.AUTOCOMMIT, "true")
-				.setProperty(AvailableSettings.URL, this.url)
-				.buildSessionFactory();
+		Configuration conf = new Configuration();
+		for (Class<? extends ReportEntity> cls : getAnnotated()) {
+			conf.addAnnotatedClass(cls);
+		}
+		
+		return conf
+			.setProperty(AvailableSettings.DIALECT, DIALECT)
+			.setProperty(AvailableSettings.AUTOCOMMIT, "true")
+			.setProperty(AvailableSettings.URL, url)
+			.buildSessionFactory();
+	}
+	
+	public static List<Class<? extends ReportEntity>> getAnnotated() {
+		List<Class<? extends ReportEntity>> annotated = new ArrayList<>();
+		annotated.add(TestNGResults.class);
+		return annotated;
 	}
 	
 	private static String getDialect() {
