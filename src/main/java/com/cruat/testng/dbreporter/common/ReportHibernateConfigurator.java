@@ -29,10 +29,10 @@ class ReportHibernateConfigurator{
 		}
 		
 		return conf
-			.setProperty(AvailableSettings.DIALECT, DIALECT)
-			.setProperty(AvailableSettings.AUTOCOMMIT, "true")
-			.setProperty(AvailableSettings.URL, url)
-			.buildSessionFactory();
+				.setProperty(AvailableSettings.DIALECT, DIALECT)
+				.setProperty(AvailableSettings.AUTOCOMMIT, "true")
+				.setProperty(AvailableSettings.URL, url)
+				.buildSessionFactory();
 	}
 	
 	public static List<Class<? extends ReportEntity>> getAnnotated() {
