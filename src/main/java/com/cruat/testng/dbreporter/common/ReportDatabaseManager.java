@@ -8,13 +8,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 public class ReportDatabaseManager {
-	public static final String URL_KEY = "reporting.url";
 	public static final String CHANGELOG = "changelog/changelog.xml";
 	
 	private final String connectionString;
 	
-	public ReportDatabaseManager() {
-		connectionString = System.getProperty(URL_KEY);
+	public ReportDatabaseManager(String connString) {
+		this.connectionString = connString;
 	}
 	
 	public String getConnectionString() {
