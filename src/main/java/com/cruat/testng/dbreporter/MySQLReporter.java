@@ -41,11 +41,9 @@ public class MySQLReporter implements IReporter {
 	
 	public void writeResults(TestNGResults insertable) {
 		EntityManager manager = dbManager.getEntityManager();
-		GenericDAO<TestNGResults> resultsDAO = new GenericDAO<>(manager,
-				TestNGResults.class);
-		resultsDAO.geEntityManager().getTransaction().begin();
-		resultsDAO.create(insertable);
-		resultsDAO.geEntityManager().getTransaction().commit();
+		manager.getTransaction().begin();
+		new GenericDAO<>(manager, TestNGResults.class).create(insertable);
+		manager.getTransaction().commit();
 	}
 	
 	public TestNGResults toResults(Collection<ISuite> suites) {
