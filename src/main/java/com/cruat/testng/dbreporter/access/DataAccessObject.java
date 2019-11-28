@@ -8,7 +8,7 @@ import javax.persistence.TypedQuery;
 import com.cruat.testng.dbreporter.entities.ReportEntity;
 
 interface DataAccessObject<T extends ReportEntity> {
-	EntityManager geEntityManager();
+	EntityManager getEntityManager();
 	Class<T> getEntityClass();
 	
 	default T first(String query, Object...params) {
@@ -26,7 +26,7 @@ interface DataAccessObject<T extends ReportEntity> {
 	}
 
 	default List<T> query(String queryString, Object... params) {
-		EntityManager manager = geEntityManager();
+		EntityManager manager = getEntityManager();
 		TypedQuery<T> q = manager.createQuery(queryString, getEntityClass());
 		for (int i = 0; i < params.length; i++) {
 			q.setParameter(i, params[i]);
@@ -35,20 +35,20 @@ interface DataAccessObject<T extends ReportEntity> {
 	}
 	
 	default T update(T entity) {
-		return geEntityManager().merge(entity);
+		return getEntityManager().merge(entity);
 	}
 
 	default void create(T entity) {
-		geEntityManager().persist(entity);
+		getEntityManager().persist(entity);
 	}
 
 	default void delete(T entity) {
-		geEntityManager().remove(entity);
+		getEntityManager().remove(entity);
 	}
 	
 	default void delete(Iterable<T> entities) {
 		for(T entity : entities) {
-			geEntityManager().remove(entity);
+			getEntityManager().remove(entity);
 		}
 	}
 }

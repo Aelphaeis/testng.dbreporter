@@ -17,7 +17,7 @@ public class GenericDAO<T extends ReportEntity> implements DataAccessObject<T> {
 	}
 	
 	@Override
-	public EntityManager geEntityManager() {
+	public EntityManager getEntityManager() {
 		return this.entityManager;
 	}
 	
