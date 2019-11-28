@@ -24,12 +24,12 @@ import com.cruat.testng.dbreporter.utilities.Strings;
 public class MySQLReporter implements IReporter {
 	public static final String URL_KEY = "reporting.url";
 
-	protected final ReportDatabaseManager dbManager;
-	
+	private final ReportDatabaseManager dbManager;
+
 	public MySQLReporter() {
 		dbManager = new ReportDatabaseManager(System.getProperty(URL_KEY));
 	}
-	
+
 	@Override
 	public void generateReport(List<XmlSuite> xml, List<ISuite> s, String dir) {
 		String url = dbManager.getConnectionString();
@@ -39,21 +39,21 @@ public class MySQLReporter implements IReporter {
 		dbManager.getLiquibaseRunner().run();
 		writeResults(toResults(s));
 	}
-	
+
 	public void writeResults(TestNGResults insertable) {
 		EntityManager manager = dbManager.getEntityManager();
 		manager.getTransaction().begin();
 		new GenericDAO<>(manager, TestNGResults.class).create(insertable);
 		manager.getTransaction().commit();
 	}
-	
+
 	public TestNGResults toResults(Collection<ISuite> suites) {
 		TestNGResults results = new TestNGResults();
-		
+
 		int passed = 0;
 		int failed = 0;
 		int skipped = 0;
-		
+
 		for (ISuite suite : suites) {
 			// Might need to synchronize this map
 			for (ISuiteResult suiteResult : suite.getResults().values()) {
@@ -63,35 +63,35 @@ public class MySQLReporter implements IReporter {
 				skipped += context.getSkippedTests().size();
 			}
 		}
-		
+
 		List<ITestContext> contexts = suites.stream()
 				.map(ISuite::getResults)
 				.map(Map::values)
 				.flatMap(Collection::stream)
 				.map(ISuiteResult::getTestContext)
 				.collect(Collectors.toList());
-		
+
 		OffsetDateTime start = contexts.stream()
 				.map(ITestContext::getStartDate)
 				.min(Date::compareTo)
 				.map(Date::toInstant)
 				.map(p -> p.atOffset(ZoneOffset.UTC))
 				.orElseThrow(IllegalArgumentException::new);
-		
+
 		OffsetDateTime end = contexts.stream()
 				.map(ITestContext::getEndDate)
 				.max(Date::compareTo)
 				.map(Date::toInstant)
 				.map(p -> p.atOffset(ZoneOffset.UTC))
 				.orElseThrow(IllegalArgumentException::new);
-		
+
 		results.setStartDatetime(start.toInstant().atOffset(ZoneOffset.UTC));
 		results.setEndDateTime(end.toInstant().atOffset(ZoneOffset.UTC));
 		results.setTotal(passed + failed + skipped);
 		results.setSkipped(skipped);
 		results.setFailed(failed);
 		results.setPassed(passed);
-		
+
 		return results;
 	}
 }
