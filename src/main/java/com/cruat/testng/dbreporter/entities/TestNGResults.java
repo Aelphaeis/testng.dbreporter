@@ -18,12 +18,12 @@ public class TestNGResults implements ReportEntity {
 	private int total;
 	private OffsetDateTime startDatetime;
 	private OffsetDateTime endDateTime;
-
+	
 	/**
 	 * @return the id
 	 */
 	@Id
-	@Column(name="id")
+	@Column(name = "id")
 	public long getId() {
 		return id;
 	}
@@ -39,7 +39,7 @@ public class TestNGResults implements ReportEntity {
 	/**
 	 * @return the passed
 	 */
-	@Column(name="passed")
+	@Column(name = "passed")
 	public int getPassed() {
 		return passed;
 	}
@@ -55,7 +55,7 @@ public class TestNGResults implements ReportEntity {
 	/**
 	 * @return the failed
 	 */
-	@Column(name="failed")
+	@Column(name = "failed")
 	public int getFailed() {
 		return failed;
 	}
@@ -71,7 +71,7 @@ public class TestNGResults implements ReportEntity {
 	/**
 	 * @return the skipped
 	 */
-	@Column(name="skipped")
+	@Column(name = "skipped")
 	public int getSkipped() {
 		return skipped;
 	}
@@ -87,7 +87,7 @@ public class TestNGResults implements ReportEntity {
 	/**
 	 * @return the total
 	 */
-	@Column(name="total")
+	@Column(name = "total")
 	public int getTotal() {
 		return total;
 	}
@@ -103,28 +103,30 @@ public class TestNGResults implements ReportEntity {
 	/**
 	 * @return the startDatetime
 	 */
-	@Column(name="start")
+	@Column(name = "start")
 	public OffsetDateTime getStartDatetime() {
 		return startDatetime;
 	}
-
+	
 	/**
-	 * @param startDatetime the startDatetime to set
+	 * @param startDatetime
+	 *            the startDatetime to set
 	 */
 	public void setStartDatetime(OffsetDateTime startDatetime) {
 		this.startDatetime = startDatetime;
 	}
-
+	
 	/**
 	 * @return the endDateTime
 	 */
-	@Column(name="end")
+	@Column(name = "end")
 	public OffsetDateTime getEndDateTime() {
 		return endDateTime;
 	}
-
+	
 	/**
-	 * @param endDateTime the endDateTime to set
+	 * @param endDateTime
+	 *            the endDateTime to set
 	 */
 	public void setEndDateTime(OffsetDateTime endDateTime) {
 		this.endDateTime = endDateTime;
