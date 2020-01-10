@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="testng.dbreporter.prototype" verbose="10" parallel="classes">
+	<listeners>
+		<listener
+			class-name="com.cruat.testng.dbreporter.MySQLReporter" />
+	</listeners>
+	<test name="stringTest" junit="true">
+		<classes>
+			<class name="com.cruat.testng.dbreporter.utilities.StringsTest" />
+		</classes>
+	</test>
+</suite>
