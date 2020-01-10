@@ -90,7 +90,5 @@ public class TestNGSuite {
 	 */
 	public void setResultId(long resultId) {
 		this.resultId = resultId;
-	};
-	
-	
+	}
 }
