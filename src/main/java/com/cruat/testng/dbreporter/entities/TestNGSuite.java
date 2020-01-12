@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "testng_suites")
-public class TestNGSuite {
+public class TestNGSuite implements ReportEntity {
 
 	private long id;
 	private String name;
