@@ -1,10 +1,10 @@
 package com.cruat.testng.dbreporter.entities;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assume.assumeThat;
 import static org.junit.Assume.assumeTrue;
 
 import java.time.OffsetDateTime;
@@ -38,7 +38,7 @@ public class TestNGResultsTest {
 
 	@Before
 	public void setup() {
-		String location = folder.getRoot().toString().replace("\\", "/");
+		String location = folder.getRoot().toString();
 		connString = String.format(CONN_STR_TEMPLATE, location);
 		assumeTrue(JDBC.isValidURL(connString));
 
@@ -63,7 +63,7 @@ public class TestNGResultsTest {
 		dao.create(expected);
 		dao.getEntityManager().getTransaction().commit();
 
-		assumeThat(expected.getId(), not(0));
+		assertThat(expected.getId(), is(not(0L)));
 
 		TestNGResults r = dao.distinct(query, expected.getId());
 
