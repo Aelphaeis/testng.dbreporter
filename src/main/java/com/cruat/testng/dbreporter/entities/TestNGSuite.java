@@ -4,6 +4,8 @@ import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,6 +26,7 @@ public class TestNGSuite implements ReportEntity {
 	 */
 	@Id
 	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getId() {
 		return id;
 	}
@@ -84,8 +87,8 @@ public class TestNGSuite implements ReportEntity {
 	 * @return the resultId
 	 */
 	
-	@ManyToOne
-	@JoinColumn(name = "testng_results_id")
+	@ManyToOne(targetEntity = TestNGResults.class)
+	@JoinColumn(name = "testng_results_id", referencedColumnName = "id")
 	public TestNGResults getResult() {
 		return result;
 	}
@@ -94,6 +97,7 @@ public class TestNGSuite implements ReportEntity {
 	 * @param resultId the resultId to set
 	 */
 	public void setResult(TestNGResults result) {
+		result.getSuites().add(this);
 		this.result = result;
 	}
 }
