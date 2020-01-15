@@ -2,7 +2,7 @@
 <suite name="testng.dbreporter.prototype" verbose="10" parallel="classes">
 	<listeners>
 		<listener
-			class-name="com.cruat.testng.dbreporter.MySQLReporter" />
+			class-name="com.cruat.testng.dbreporter.DatabaseReporter" />
 	</listeners>
 	<test name="stringTest" junit="true">
 		<classes>
