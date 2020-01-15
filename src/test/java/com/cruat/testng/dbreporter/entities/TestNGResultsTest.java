@@ -11,7 +11,6 @@ import java.time.OffsetDateTime;
 
 import javax.persistence.EntityManager;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -35,21 +34,16 @@ public class TestNGResultsTest {
 	private EntityManager em;
 
 	private GenericDAO<TestNGResults> dao;
-
-	@Before
-	public void setup() {
-		String location = folder.getRoot().toString();
-		connString = String.format(CONN_STR_TEMPLATE, location);
-		assumeTrue(JDBC.isValidURL(connString));
-
-		dbmanager = new ReportDatabaseManager(connString);
-		dbmanager.getLiquibaseRunner().run();
-		em = dbmanager.getEntityManager();
-		dao = new GenericDAO<>(em, TestNGResults.class);
+	
+	@Test
+	public void ctor_parseSuiteList_success() {
+		
 	}
 
 	@Test
 	public void ctor_mappings_OutputMatchesInput() {
+		setupdb();
+		
 		final String query = "from TestNGResults where id=?0";
 		TestNGResults expected = new TestNGResults();
 		expected.setStartDatetime(OffsetDateTime.now());
@@ -74,5 +68,16 @@ public class TestNGResultsTest {
 		assertThat(r.getSkipped(), equalTo(expected.getSkipped()));
 		assertThat(r.getEndDateTime(), equalTo(expected.getEndDateTime()));
 		assertThat(r.getStartDatetime(), equalTo(expected.getStartDatetime()));
+	}
+	
+	private void setupdb() {
+		String location = folder.getRoot().toString();
+		connString = String.format(CONN_STR_TEMPLATE, location);
+		assumeTrue(JDBC.isValidURL(connString));
+
+		dbmanager = new ReportDatabaseManager(connString);
+		dbmanager.getLiquibaseRunner().run();
+		em = dbmanager.getEntityManager();
+		dao = new GenericDAO<>(em, TestNGResults.class);
 	}
 }
