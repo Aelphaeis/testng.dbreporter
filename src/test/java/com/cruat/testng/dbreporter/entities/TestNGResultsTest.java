@@ -26,9 +26,9 @@ public class TestNGResultsTest {
 	private static final String CONN_STR_TEMPLATE = "jdbc:sqlite:%s/test.db";
 
 	@Rule
-	public TemporaryFolder folder = new TemporaryFolder();
+	public final TemporaryFolder folder = new TemporaryFolder();
 	@Rule
-	public ErrorCollector collector = new ErrorCollector();
+	public final ErrorCollector collector = new ErrorCollector();
 
 	private ReportDatabaseManager dbmanager;
 	private String connString;
