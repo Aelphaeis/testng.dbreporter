@@ -5,6 +5,8 @@ import java.time.OffsetDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,7 +17,7 @@ public class TestNGSuite implements ReportEntity {
 	private String name;
 	private OffsetDateTime startDatetime;
 	private OffsetDateTime endDateTime;
-	private long resultId;
+	private TestNGResults result;
 	
 	/**
 	 * @return the id
@@ -81,14 +83,17 @@ public class TestNGSuite implements ReportEntity {
 	/**
 	 * @return the resultId
 	 */
-	public long getResultId() {
-		return resultId;
+	
+	@ManyToOne
+	@JoinColumn(name = "testng_results_id")
+	public TestNGResults getResult() {
+		return result;
 	}
 	
 	/**
 	 * @param resultId the resultId to set
 	 */
-	public void setResultId(long resultId) {
-		this.resultId = resultId;
+	public void setResult(TestNGResults result) {
+		this.result = result;
 	}
 }

@@ -1,12 +1,16 @@
 package com.cruat.testng.dbreporter.entities;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +24,12 @@ public class TestNGResults implements ReportEntity {
 	private int total;
 	private OffsetDateTime startDatetime;
 	private OffsetDateTime endDateTime;
+	
+	private List<TestNGSuite> suites;
+	
+	public TestNGResults() {
+		suites = new ArrayList<>();
+	}
 	
 	/**
 	 * @return the id
@@ -134,5 +144,22 @@ public class TestNGResults implements ReportEntity {
 	public void setEndDateTime(OffsetDateTime endDateTime) {
 		this.endDateTime = endDateTime;
 	}
+
 	
+	/**
+	 * @return the suites
+	 */
+	@OneToMany
+	@JoinColumn(name = "testng_results_id")
+	public List<TestNGSuite> getSuites() {
+		return suites;
+	}
+
+	
+	/**
+	 * @param suites the suites to set
+	 */
+	public void setSuites(List<TestNGSuite> suites) {
+		this.suites = suites;
+	}
 }
