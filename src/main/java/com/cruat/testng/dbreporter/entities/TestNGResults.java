@@ -1,8 +1,14 @@
 package com.cruat.testng.dbreporter.entities;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +18,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.testng.ISuite;
+import org.testng.ISuiteResult;
+import org.testng.ITestContext;
 
 @Entity
 @Table(name = "testng_results")
@@ -28,7 +38,44 @@ public class TestNGResults implements ReportEntity {
 	private List<TestNGSuite> suites;
 	
 	public TestNGResults() {
-		suites = new ArrayList<>();
+		this(Collections.emptyList());
+	}
+	
+	public TestNGResults(Collection<ISuite> suites) {
+		this.suites = new ArrayList<>();
+		for (ISuite suite : suites) {
+			// Might need to synchronize this map
+			for (ISuiteResult suiteResult : suite.getResults().values()) {
+				ITestContext context = suiteResult.getTestContext();
+				passed += context.getPassedTests().size();
+				failed += context.getFailedTests().size();
+				skipped += context.getSkippedTests().size();
+			}
+		}
+		total = passed + skipped + failed;
+		
+		if (!suites.isEmpty()) {
+			List<ITestContext> contexts = suites.stream()
+					.map(ISuite::getResults)
+					.map(Map::values)
+					.flatMap(Collection::stream)
+					.map(ISuiteResult::getTestContext)
+					.collect(Collectors.toList());
+			
+			startDatetime = contexts.stream()
+					.map(ITestContext::getStartDate)
+					.min(Date::compareTo)
+					.map(Date::toInstant)
+					.map(p -> p.atOffset(ZoneOffset.UTC))
+					.orElseThrow(IllegalArgumentException::new);
+			
+			endDateTime = contexts.stream()
+					.map(ITestContext::getEndDate)
+					.max(Date::compareTo)
+					.map(Date::toInstant)
+					.map(p -> p.atOffset(ZoneOffset.UTC))
+					.orElseThrow(IllegalArgumentException::new);
+		}
 	}
 	
 	/**
