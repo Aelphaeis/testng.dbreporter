@@ -47,8 +47,6 @@ interface DataAccessObject<T extends ReportEntity> {
 	}
 	
 	default void delete(Iterable<T> entities) {
-		for(T entity : entities) {
-			getEntityManager().remove(entity);
-		}
+		entities.forEach(this::delete);
 	}
 }
