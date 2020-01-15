@@ -21,12 +21,12 @@ import com.cruat.testng.dbreporter.common.ReportDatabaseManager;
 import com.cruat.testng.dbreporter.entities.TestNGResults;
 import com.cruat.testng.dbreporter.utilities.Strings;
 
-public class MySQLReporter implements IReporter {
+public class DatabaseReporter implements IReporter {
 	public static final String URL_KEY = "reporting.url";
 
 	private final ReportDatabaseManager dbManager;
 
-	public MySQLReporter() {
+	public DatabaseReporter() {
 		dbManager = new ReportDatabaseManager(System.getProperty(URL_KEY));
 	}
 
