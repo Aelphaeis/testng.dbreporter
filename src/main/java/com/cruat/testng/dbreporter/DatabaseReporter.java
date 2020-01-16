@@ -24,12 +24,10 @@ public class DatabaseReporter implements IReporter {
 
 	@Override
 	public void generateReport(List<XmlSuite> xml, List<ISuite> s, String dir) {
-		String url = dbManager.getConnectionString();
-		if (Strings.isBlank(url)) {
-			return;
+		if (!Strings.isBlank(dbManager.getConnectionString())) {
+			dbManager.getLiquibaseRunner().run();
+			writeResults(new TestNGResults(s));
 		}
-		dbManager.getLiquibaseRunner().run();
-		writeResults(new TestNGResults(s));
 	}
 
 	public void writeResults(TestNGResults insertable) {
