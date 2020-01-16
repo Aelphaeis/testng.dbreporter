@@ -2,6 +2,7 @@ package com.cruat.testng.dbreporter.entities;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -30,12 +31,17 @@ public class TestNGSuite implements ReportEntity {
 	private String name;
 	private OffsetDateTime startDatetime;
 	private OffsetDateTime endDateTime;
+	
 	private TestNGResults result;
+	private List<TestNGTest> testResults;
 	
-	
-	public TestNGSuite() { }
+	public TestNGSuite() { 
+		testResults = new ArrayList<>();
+	}
 	
 	public TestNGSuite(ISuite suite) {
+		this();
+		
 		this.name = suite.getName();
 		
 		List<ITestContext> contexts = Stream.of(suite)
@@ -138,5 +144,21 @@ public class TestNGSuite implements ReportEntity {
 	public void setResult(TestNGResults result) {
 		result.getSuites().add(this);
 		this.result = result;
+	}
+
+	
+	/**
+	 * @return the testResults
+	 */
+	public List<TestNGTest> getTestResults() {
+		return testResults;
+	}
+
+	
+	/**
+	 * @param testResults the testResults to set
+	 */
+	public void setTestResults(List<TestNGTest> testResults) {
+		this.testResults = testResults;
 	}
 }
