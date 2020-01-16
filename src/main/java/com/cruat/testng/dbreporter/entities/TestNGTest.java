@@ -1,13 +1,33 @@
 package com.cruat.testng.dbreporter.entities;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.testng.ITestContext;
+
+/**
+ * 
+ * modeled after org.testng.ISuiteResult;
+ * @author morain
+ *
+ */
 public class TestNGTest implements ReportEntity {
 	
 	private long id;
 	private int name;
 	private OffsetDateTime start;
 	private OffsetDateTime end;
+	
+	List<TestNGClass> classes;
+	
+	public TestNGTest() {
+		this.classes = new ArrayList<>();
+	}
+	
+	public TestNGTest(ITestContext c) {
+		this();
+	}
 	
 	/**
 	 * @return the id
