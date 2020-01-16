@@ -9,6 +9,7 @@ import org.testng.ITestContext;
 /**
  * 
  * modeled after org.testng.ISuiteResult;
+ * 
  * @author morain
  *
  */
@@ -26,7 +27,7 @@ public class TestNGTest implements ReportEntity {
 	}
 	
 	public TestNGTest(ITestContext c) {
-		this();
+		throw new UnsupportedOperationException("Not Implemented");
 	}
 	
 	/**
@@ -88,5 +89,4 @@ public class TestNGTest implements ReportEntity {
 	public void setEnd(OffsetDateTime end) {
 		this.end = end;
 	}
-	
 }
