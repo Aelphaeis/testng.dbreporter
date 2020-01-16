@@ -1,6 +1,13 @@
 package com.cruat.testng.dbreporter.entities;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,16 +18,48 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.testng.ISuite;
+import org.testng.ISuiteResult;
+import org.testng.ITestContext;
+
 @Entity
 @Table(name = "testng_suites")
 public class TestNGSuite implements ReportEntity {
-
+	
 	private long id;
 	private String name;
 	private OffsetDateTime startDatetime;
 	private OffsetDateTime endDateTime;
 	private TestNGResults result;
 	
+	
+	public TestNGSuite() { }
+	
+	public TestNGSuite(ISuite suite) {
+		this.name = suite.getName();
+		
+		List<ITestContext> contexts = Stream.of(suite)
+				.map(ISuite::getResults)
+				.map(Map::values)
+				.flatMap(Collection::stream)
+				.map(ISuiteResult::getTestContext)
+				.collect(Collectors.toList());
+		
+		startDatetime = contexts.stream()
+				.map(ITestContext::getStartDate)
+				.min(Date::compareTo)
+				.map(Date::toInstant)
+				.map(p -> p.atOffset(ZoneOffset.UTC))
+				.orElseThrow(IllegalArgumentException::new);
+		
+		endDateTime = contexts.stream()
+				.map(ITestContext::getEndDate)
+				.max(Date::compareTo)
+				.map(Date::toInstant)
+				.map(p -> p.atOffset(ZoneOffset.UTC))
+				.orElseThrow(IllegalArgumentException::new);
+		
+	}
 	/**
 	 * @return the id
 	 */

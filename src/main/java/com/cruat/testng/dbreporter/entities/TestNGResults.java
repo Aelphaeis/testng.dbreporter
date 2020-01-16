@@ -4,7 +4,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +37,12 @@ public class TestNGResults implements ReportEntity {
 	private List<TestNGSuite> suites;
 	
 	public TestNGResults() {
-		this(Collections.emptyList());
+		this.suites = new ArrayList<>();
 	}
 	
 	public TestNGResults(Collection<ISuite> suites) {
-		this.suites = new ArrayList<>();
+		this();
+		
 		for (ISuite suite : suites) {
 			// Might need to synchronize this map
 			for (ISuiteResult suiteResult : suite.getResults().values()) {
@@ -50,6 +50,11 @@ public class TestNGResults implements ReportEntity {
 				passed += context.getPassedTests().size();
 				failed += context.getFailedTests().size();
 				skipped += context.getSkippedTests().size();
+				
+				TestNGSuite ngSuite = new TestNGSuite(suite);
+				ngSuite.setResult(this);
+				this.suites.add(ngSuite);
+				
 			}
 		}
 		total = passed + skipped + failed;
