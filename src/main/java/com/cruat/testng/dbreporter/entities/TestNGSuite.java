@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.testng.ISuite;
 import org.testng.ISuiteResult;
@@ -150,6 +151,7 @@ public class TestNGSuite implements ReportEntity {
 	/**
 	 * @return the testResults
 	 */
+	@Transient
 	public List<TestNGTest> getTestResults() {
 		return testResults;
 	}
