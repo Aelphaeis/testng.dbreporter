@@ -2,6 +2,7 @@ package com.cruat.testng.dbreporter.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Map.Entry;
 
 import javax.persistence.Column;
@@ -140,7 +141,7 @@ public class TestNGClass implements ReportEntity {
 	 * @param methods the methods to set
 	 */
 	public void setTestMethods(List<TestNGMethod> testMethods) {
-		this.methods = testMethods;
+		this.methods = Objects.requireNonNull(testMethods);
 	}
 	
 }
