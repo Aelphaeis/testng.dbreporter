@@ -8,7 +8,7 @@ import org.testng.IReporter;
 import org.testng.ISuite;
 import org.testng.xml.XmlSuite;
 
-import com.cruat.testng.dbreporter.access.GenericDAO;
+import com.cruat.testng.dbreporter.access.ResultDAO;
 import com.cruat.testng.dbreporter.common.ReportDatabaseManager;
 import com.cruat.testng.dbreporter.entities.TestNGResults;
 import com.cruat.testng.dbreporter.utilities.Strings;
@@ -33,7 +33,7 @@ public class DatabaseReporter implements IReporter {
 	public void writeResults(TestNGResults insertable) {
 		EntityManager manager = dbManager.getEntityManager();
 		manager.getTransaction().begin();
-		new GenericDAO<>(manager, TestNGResults.class).create(insertable);
+		new ResultDAO(manager).create(insertable);
 		manager.getTransaction().commit();
 	}
 }
