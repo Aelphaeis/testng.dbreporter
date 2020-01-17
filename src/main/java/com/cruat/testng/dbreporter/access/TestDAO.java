@@ -2,7 +2,6 @@ package com.cruat.testng.dbreporter.access;
 
 import javax.persistence.EntityManager;
 
-import com.cruat.testng.dbreporter.entities.TestNGClass;
 import com.cruat.testng.dbreporter.entities.TestNGTest;
 
 public class TestDAO extends GenericDAO<TestNGTest> {
@@ -18,8 +17,9 @@ public class TestDAO extends GenericDAO<TestNGTest> {
 		//Required because https://hibernate.atlassian.net/browse/HHH-11210
 		//prevents us from using cascade persistence. 
 		ClassDAO classDAO = new ClassDAO(getEntityManager());
-		for (TestNGClass c : e.getClasses()) {
-			classDAO.create(c);
+		for(int i =  0; i < e.getClasses().size(); i++) {
+			//Enhanced for loop cannot be used here due to concurrency issues.
+			classDAO.create(e.getClasses().get(i));
 		}
 	}
 }
