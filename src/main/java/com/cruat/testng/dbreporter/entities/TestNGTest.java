@@ -10,19 +10,24 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.testng.IResultMap;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 
 import com.cruat.testng.dbreporter.utilities.ResultComparator;
 
-/**
- * 
- * modeled after org.testng.ISuiteResult;
- * 
- * @author morain
- *
- */
+@Entity
+@Table(name = "testng_tests")
 public class TestNGTest implements ReportEntity {
 	
 	private long id;
@@ -80,6 +85,9 @@ public class TestNGTest implements ReportEntity {
 	/**
 	 * @return the id
 	 */
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getId() {
 		return id;
 	}
@@ -95,6 +103,7 @@ public class TestNGTest implements ReportEntity {
 	/**
 	 * @return the name
 	 */
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -110,6 +119,7 @@ public class TestNGTest implements ReportEntity {
 	/**
 	 * @return the start
 	 */
+	@Column(name = "start")
 	public OffsetDateTime getStart() {
 		return start;
 	}
@@ -125,6 +135,7 @@ public class TestNGTest implements ReportEntity {
 	/**
 	 * @return the end
 	 */
+	@Column(name = "end")
 	public OffsetDateTime getEnd() {
 		return end;
 	}
@@ -141,6 +152,8 @@ public class TestNGTest implements ReportEntity {
 	/**
 	 * @return the suite
 	 */
+	@ManyToOne(targetEntity = TestNGSuite.class)
+	@JoinColumn(name = "testng_suite_id", referencedColumnName = "id")
 	public TestNGSuite getSuite() {
 		return suite;
 	}
@@ -157,6 +170,7 @@ public class TestNGTest implements ReportEntity {
 	/**
 	 * @return the classes
 	 */
+	@Transient
 	public List<TestNGClass> getClasses() {
 		return classes;
 	}
