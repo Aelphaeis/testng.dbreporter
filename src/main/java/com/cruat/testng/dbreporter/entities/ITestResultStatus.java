@@ -1,6 +1,7 @@
 package com.cruat.testng.dbreporter.entities;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 public enum ITestResultStatus {
 	
@@ -26,6 +27,6 @@ public enum ITestResultStatus {
 		return Arrays.stream(ITestResultStatus.values())
 				.filter(p -> p.getValue() == i)
 				.findAny()
-				.orElseThrow(IllegalArgumentException::new);
+				.orElseThrow(NoSuchElementException::new);
 	}
 }
