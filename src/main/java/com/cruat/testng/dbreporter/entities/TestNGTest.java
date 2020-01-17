@@ -4,6 +4,8 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -52,11 +54,19 @@ public class TestNGTest implements ReportEntity {
 		aggregation.addAll(sort(c.getFailedConfigurations()));
 		aggregation.addAll(sort(c.getFailedButWithinSuccessPercentageTests()));
 		
-		for(ITestResult result : aggregation) {
-			TestNGClass test = new TestNGClass(result);
-			test.setContext(this);
-			classes.add(test);
+		
+		Map<String, List<ITestResult>> results = aggregation.stream()
+			.collect(Collectors.groupingBy(TestNGTest::resolveName));
+			
+		for(Entry<String, List<ITestResult>> result : results.entrySet()) {
+			TestNGClass cls = new TestNGClass(result);
+			cls.setContext(this);
+			classes.add(cls);
 		}
+	}
+	
+	private static String resolveName(ITestResult result) {
+		return result.getTestClass().getName();
 	}
 	
 	private static List<ITestResult> sort(IResultMap in) {

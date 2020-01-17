@@ -2,6 +2,7 @@ package com.cruat.testng.dbreporter.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.testng.ITestResult;
 
@@ -19,10 +20,10 @@ public class TestNGClass implements ReportEntity {
 		this.testMethods = new ArrayList<>();
 	}
 	
-	public TestNGClass(ITestResult result) {
+	public TestNGClass(Entry<String, List<ITestResult>> e) {
 		this();
 		
-		String classname = result.getTestClass().getName();
+		String classname = e.getKey();
 		int dotIndex = classname.lastIndexOf('.');
 		
 		if(dotIndex > -1) {
