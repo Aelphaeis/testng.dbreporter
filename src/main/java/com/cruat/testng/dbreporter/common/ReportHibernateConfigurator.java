@@ -14,6 +14,7 @@ import org.hibernate.cfg.Configuration;
 import com.cruat.testng.dbreporter.entities.ReportEntity;
 import com.cruat.testng.dbreporter.entities.TestNGResults;
 import com.cruat.testng.dbreporter.entities.TestNGSuite;
+import com.cruat.testng.dbreporter.entities.TestNGTest;
 
 class ReportHibernateConfigurator{
 	
@@ -44,6 +45,7 @@ class ReportHibernateConfigurator{
 		List<Class<? extends ReportEntity>> annotated = new ArrayList<>();
 		annotated.add(TestNGResults.class);
 		annotated.add(TestNGSuite.class);
+		annotated.add(TestNGTest.class);
 		return annotated;
 	}
 	
