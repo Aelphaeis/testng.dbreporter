@@ -5,8 +5,8 @@ import javax.persistence.EntityManager;
 import com.cruat.testng.dbreporter.entities.TestNGClass;
 import com.cruat.testng.dbreporter.entities.TestNGTest;
 
-public class TestDAO extends GenericDAO<TestNGTest>{
-
+public class TestDAO extends GenericDAO<TestNGTest> {
+	
 	public TestDAO(EntityManager em) {
 		super(em, TestNGTest.class);
 	}
@@ -14,7 +14,10 @@ public class TestDAO extends GenericDAO<TestNGTest>{
 	@Override
 	public void create(TestNGTest e) {
 		super.create(e);
-	
+		
+		ClassDAO classDAO = new ClassDAO(getEntityManager());
+		for (TestNGClass c : e.getClasses()) {
+			classDAO.create(c);
+		}
 	}
-	
 }
