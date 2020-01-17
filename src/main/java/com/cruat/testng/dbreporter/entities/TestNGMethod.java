@@ -3,7 +3,6 @@ package com.cruat.testng.dbreporter.entities;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
-import java.util.stream.LongStream;
 
 import org.testng.ITestResult;
 
@@ -21,8 +20,7 @@ public class TestNGMethod implements ReportEntity {
 	
 	private TestNGClass group;
 	
-	public TestNGMethod() {
-	}
+	public TestNGMethod() {}
 	
 	public TestNGMethod(ITestResult itr) {
 		this();
@@ -34,19 +32,13 @@ public class TestNGMethod implements ReportEntity {
 		description = itr.getMethod().getDescription();
 		retried = itr.wasRetried();
 		
-		LongStream.of(itr.getStartMillis())
-				.mapToObj(Date::new)
-				.map(Date::toInstant)
-				.map(p -> p.atOffset(ZoneOffset.UTC))
-				.findFirst()
-				.ifPresent(this::setStart);
+		this.start = new Date(itr.getStartMillis())
+				.toInstant()
+				.atOffset(ZoneOffset.UTC);
 		
-		LongStream.of(itr.getEndMillis())
-				.mapToObj(Date::new)
-				.map(Date::toInstant)
-				.map(p -> p.atOffset(ZoneOffset.UTC))
-				.findFirst()
-				.ifPresent(this::setEnd);
+		this.end = new Date(itr.getEndMillis())
+				.toInstant()
+				.atOffset(ZoneOffset.UTC);
 	}
 	
 	/**
