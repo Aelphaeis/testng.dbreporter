@@ -34,16 +34,23 @@ public class TestNGSuite implements ReportEntity {
 	private OffsetDateTime endDateTime;
 	
 	private TestNGResults result;
-	private List<TestNGTest> testResults;
+	private List<TestNGTest> contexts;
 	
 	public TestNGSuite() { 
-		testResults = new ArrayList<>();
+		contexts = new ArrayList<>();
 	}
 	
 	public TestNGSuite(ISuite suite) {
 		this();
 		
 		this.name = suite.getName();
+		
+		for(ISuiteResult result : suite.getResults().values()) {
+			TestNGTest test = new TestNGTest(result.getTestContext());
+			test.setSuite(this);
+			contexts.add(test);
+		}
+	
 		
 		List<ITestContext> contexts = Stream.of(suite)
 				.map(ISuite::getResults)
@@ -65,6 +72,8 @@ public class TestNGSuite implements ReportEntity {
 				.map(Date::toInstant)
 				.map(p -> p.atOffset(ZoneOffset.UTC))
 				.orElseThrow(IllegalArgumentException::new);
+		
+	
 		
 	}
 	/**
@@ -149,18 +158,18 @@ public class TestNGSuite implements ReportEntity {
 
 	
 	/**
-	 * @return the testResults
+	 * @return the contexts
 	 */
 	@Transient
 	public List<TestNGTest> getTestResults() {
-		return testResults;
+		return contexts;
 	}
 
 	
 	/**
-	 * @param testResults the testResults to set
+	 * @param contexts the contexts to set
 	 */
 	public void setTestResults(List<TestNGTest> testResults) {
-		this.testResults = testResults;
+		this.contexts = testResults;
 	}
 }
