@@ -159,8 +159,8 @@ public class TestNGSuite implements ReportEntity {
 	/**
 	 * @return the contexts
 	 */
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "contexts")
-	public List<TestNGTest> getTestResults() {
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "suite")
+	public List<TestNGTest> getContexts() {
 		return contexts;
 	}
 
@@ -168,7 +168,7 @@ public class TestNGSuite implements ReportEntity {
 	/**
 	 * @param contexts the contexts to set
 	 */
-	public void setTestResults(List<TestNGTest> testResults) {
+	public void setContexts(List<TestNGTest> testResults) {
 		this.contexts = testResults;
 	}
 }
