@@ -15,7 +15,8 @@ public class ResultDAO extends GenericDAO<TestNGResults> {
 	public void create(TestNGResults e) {
 		super.create(e);
 
-		//Required because of https://hibernate.atlassian.net/browse/HHH-11210
+		//Required because https://hibernate.atlassian.net/browse/HHH-11210
+		//prevents us from using cascade persistence. 
 		SuiteDAO suiteDAO = new SuiteDAO(getEntityManager());
 		for(TestNGSuite suite : e.getSuites()) {
 			suiteDAO.create(suite);
