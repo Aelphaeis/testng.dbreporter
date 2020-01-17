@@ -4,6 +4,8 @@ import org.testng.ITestResult;
 
 public class TestNGClass {
 	
+	public static final String DEFAULT_PACKAGE_NAME = "[default]";
+	
 	private String name;
 	private String pkgName;
 	
@@ -22,7 +24,7 @@ public class TestNGClass {
 		}
 		else {
 			this.name = classname;
-			this.pkgName = "[default]";
+			this.pkgName = DEFAULT_PACKAGE_NAME;
 		}
 	}
 	
