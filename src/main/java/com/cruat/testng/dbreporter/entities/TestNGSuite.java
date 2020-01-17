@@ -52,21 +52,21 @@ public class TestNGSuite implements ReportEntity {
 		}
 	
 		
-		List<ITestContext> contexts = Stream.of(suite)
+		List<ITestContext> ctxt = Stream.of(suite)
 				.map(ISuite::getResults)
 				.map(Map::values)
 				.flatMap(Collection::stream)
 				.map(ISuiteResult::getTestContext)
 				.collect(Collectors.toList());
 		
-		startDatetime = contexts.stream()
+		startDatetime = ctxt.stream()
 				.map(ITestContext::getStartDate)
 				.min(Date::compareTo)
 				.map(Date::toInstant)
 				.map(p -> p.atOffset(ZoneOffset.UTC))
 				.orElseThrow(IllegalArgumentException::new);
 		
-		endDateTime = contexts.stream()
+		endDateTime = ctxt.stream()
 				.map(ITestContext::getEndDate)
 				.max(Date::compareTo)
 				.map(Date::toInstant)
