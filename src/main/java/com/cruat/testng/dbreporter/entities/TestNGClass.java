@@ -1,5 +1,8 @@
 package com.cruat.testng.dbreporter.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.testng.ITestResult;
 
 public class TestNGClass implements ReportEntity {
@@ -10,7 +13,11 @@ public class TestNGClass implements ReportEntity {
 	private String pkgName;
 	
 	private TestNGTest context;
-	public TestNGClass() { }
+	private List<TestNGMethod> testMethods;
+	
+	public TestNGClass() { 
+		this.testMethods = new ArrayList<>();
+	}
 	
 	public TestNGClass(ITestResult result) {
 		this();
@@ -72,6 +79,22 @@ public class TestNGClass implements ReportEntity {
 	 */
 	public void setContext(TestNGTest context) {
 		this.context = context;
+	}
+
+	
+	/**
+	 * @return the testMethods
+	 */
+	public List<TestNGMethod> getTestMethods() {
+		return testMethods;
+	}
+
+	
+	/**
+	 * @param testMethods the testMethods to set
+	 */
+	public void setTestMethods(List<TestNGMethod> testMethods) {
+		this.testMethods = testMethods;
 	}
 	
 }
