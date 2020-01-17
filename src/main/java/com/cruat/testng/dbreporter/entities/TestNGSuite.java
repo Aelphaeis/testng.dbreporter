@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -168,6 +169,6 @@ public class TestNGSuite implements ReportEntity {
 	 * @param contexts the contexts to set
 	 */
 	public void setContexts(List<TestNGTest> testResults) {
-		this.contexts = testResults;
+		this.contexts = Objects.requireNonNull(testResults);
 	}
 }
