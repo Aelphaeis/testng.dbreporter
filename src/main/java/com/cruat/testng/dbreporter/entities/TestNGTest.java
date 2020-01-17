@@ -20,7 +20,9 @@ public class TestNGTest implements ReportEntity {
 	private OffsetDateTime start;
 	private OffsetDateTime end;
 	
-	List<TestNGClass> classes;
+	private TestNGSuite suite;
+	private List<TestNGClass> classes;
+	
 	
 	public TestNGTest() {
 		this.classes = new ArrayList<>();
@@ -88,5 +90,37 @@ public class TestNGTest implements ReportEntity {
 	 */
 	public void setEnd(OffsetDateTime end) {
 		this.end = end;
+	}
+
+	
+	/**
+	 * @return the suite
+	 */
+	public TestNGSuite getSuite() {
+		return suite;
+	}
+
+	
+	/**
+	 * @param suite the suite to set
+	 */
+	public void setSuite(TestNGSuite suite) {
+		this.suite = suite;
+	}
+
+	
+	/**
+	 * @return the classes
+	 */
+	public List<TestNGClass> getClasses() {
+		return classes;
+	}
+
+	
+	/**
+	 * @param classes the classes to set
+	 */
+	public void setClasses(List<TestNGClass> classes) {
+		this.classes = classes;
 	}
 }
