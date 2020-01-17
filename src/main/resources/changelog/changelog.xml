@@ -129,7 +129,7 @@
 			<column name="status_id" type="int">
 				<constraints nullable="false" />
 			</column>
-			<column name="retried" type="boolean">
+			<column name="isRetried" type="boolean">
 				<constraints nullable="false" />
 			</column>
 			<column name="isConfig" type="boolean">
