@@ -4,6 +4,15 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import org.testng.ITestResult;
 
 public class TestNGMethod implements ReportEntity {
@@ -44,6 +53,8 @@ public class TestNGMethod implements ReportEntity {
 	/**
 	 * @return the status
 	 */
+	@Column(name = "status_id")
+	@Enumerated(EnumType.ORDINAL)
 	public ITestResultStatus getStatus() {
 		return status;
 	}
@@ -59,6 +70,7 @@ public class TestNGMethod implements ReportEntity {
 	/**
 	 * @return the retried
 	 */
+	@Column(name = "isRetried")
 	public boolean isRetried() {
 		return retried;
 	}
@@ -74,6 +86,7 @@ public class TestNGMethod implements ReportEntity {
 	/**
 	 * @return the isConfig
 	 */
+	@Column(name = "isConfig")
 	public boolean isConfig() {
 		return isConfig;
 	}
@@ -89,6 +102,7 @@ public class TestNGMethod implements ReportEntity {
 	/**
 	 * @return the name
 	 */
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -104,6 +118,7 @@ public class TestNGMethod implements ReportEntity {
 	/**
 	 * @return the description
 	 */
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -119,6 +134,7 @@ public class TestNGMethod implements ReportEntity {
 	/**
 	 * @return the start
 	 */
+	@Column(name = "start")
 	public OffsetDateTime getStart() {
 		return start;
 	}
@@ -134,6 +150,7 @@ public class TestNGMethod implements ReportEntity {
 	/**
 	 * @return the end
 	 */
+	@Column(name = "end")
 	public OffsetDateTime getEnd() {
 		return end;
 	}
@@ -149,6 +166,9 @@ public class TestNGMethod implements ReportEntity {
 	/**
 	 * @return the id
 	 */
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getId() {
 		return id;
 	}
@@ -164,6 +184,8 @@ public class TestNGMethod implements ReportEntity {
 	/**
 	 * @return the group
 	 */
+	@ManyToOne(targetEntity = TestNGClass.class)
+	@JoinColumn(name = "testng_class_id", referencedColumnName = "id")
 	public TestNGClass getGroup() {
 		return group;
 	}
