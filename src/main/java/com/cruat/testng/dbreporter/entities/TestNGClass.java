@@ -16,10 +16,10 @@ public class TestNGClass implements ReportEntity {
 	private String pkgName;
 	
 	private TestNGTest context;
-	private List<TestNGMethod> testMethods;
+	private List<TestNGMethod> methods;
 	
 	public TestNGClass() { 
-		this.testMethods = new ArrayList<>();
+		this.methods = new ArrayList<>();
 	}
 	
 	public TestNGClass(Entry<String, List<ITestResult>> e) {
@@ -39,7 +39,9 @@ public class TestNGClass implements ReportEntity {
 		
 		e.getValue().sort(ResultComparator.INSTANCE);
 		for(ITestResult result : e.getValue()) {
-			
+			TestNGMethod method = new TestNGMethod(result);
+			method.setGroup(this);
+			methods.add(method);
 		}
 	}
 	
@@ -91,18 +93,18 @@ public class TestNGClass implements ReportEntity {
 
 	
 	/**
-	 * @return the testMethods
+	 * @return the methods
 	 */
 	public List<TestNGMethod> getTestMethods() {
-		return testMethods;
+		return methods;
 	}
 
 	
 	/**
-	 * @param testMethods the testMethods to set
+	 * @param methods the methods to set
 	 */
 	public void setTestMethods(List<TestNGMethod> testMethods) {
-		this.testMethods = testMethods;
+		this.methods = testMethods;
 	}
 	
 }
