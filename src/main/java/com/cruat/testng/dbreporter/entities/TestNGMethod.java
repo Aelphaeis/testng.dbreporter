@@ -6,6 +6,7 @@ import org.testng.ITestResult;
 
 public class TestNGMethod implements ReportEntity {
 	
+	private long id;
 	private String status;
 	private boolean retried;
 	private boolean isConfig;
@@ -141,5 +142,21 @@ public class TestNGMethod implements ReportEntity {
 	 */
 	public void setEnd(OffsetDateTime end) {
 		this.end = end;
+	}
+
+	
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+
+	
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
 	}
 }
