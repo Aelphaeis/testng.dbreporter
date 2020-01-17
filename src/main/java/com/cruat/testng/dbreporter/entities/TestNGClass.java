@@ -2,7 +2,7 @@ package com.cruat.testng.dbreporter.entities;
 
 import org.testng.ITestResult;
 
-public class TestNGClass {
+public class TestNGClass implements ReportEntity {
 	
 	public static final String DEFAULT_PACKAGE_NAME = "[default]";
 	

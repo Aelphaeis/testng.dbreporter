@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 
 import org.testng.ITestResult;
 
-public class TestNGMethod {
+public class TestNGMethod implements ReportEntity {
 	
 	private String status;
 	private boolean retried;
