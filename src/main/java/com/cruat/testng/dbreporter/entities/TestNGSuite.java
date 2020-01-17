@@ -45,8 +45,8 @@ public class TestNGSuite implements ReportEntity {
 		
 		this.name = suite.getName();
 		
-		for(ISuiteResult result : suite.getResults().values()) {
-			TestNGTest test = new TestNGTest(result.getTestContext());
+		for(ISuiteResult suiteResults : suite.getResults().values()) {
+			TestNGTest test = new TestNGTest(suiteResults.getTestContext());
 			test.setSuite(this);
 			contexts.add(test);
 		}
