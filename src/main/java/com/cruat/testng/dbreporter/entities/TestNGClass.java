@@ -4,14 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.testng.ITestResult;
 
 import com.cruat.testng.dbreporter.utilities.ResultComparator;
 
+@Entity
+@Table(name = "testng_classes")
 public class TestNGClass implements ReportEntity {
 	
 	public static final String DEFAULT_PACKAGE_NAME = "[default]";
 	
+	private long id;
 	private String name;
 	private String pkgName;
 	
@@ -46,8 +59,27 @@ public class TestNGClass implements ReportEntity {
 	}
 	
 	/**
+	 * @return the id
+	 */
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public long getId() {
+		return id;
+	}
+	
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	/**
 	 * @return the name
 	 */
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -63,6 +95,7 @@ public class TestNGClass implements ReportEntity {
 	/**
 	 * @return the pkgName
 	 */
+	@Column(name = "packageName")
 	public String getPkgName() {
 		return pkgName;
 	}
@@ -79,6 +112,8 @@ public class TestNGClass implements ReportEntity {
 	/**
 	 * @return the context
 	 */
+	@ManyToOne(targetEntity = TestNGTest.class)
+	@JoinColumn(name = "testng_test_id", referencedColumnName = "id")
 	public TestNGTest getContext() {
 		return context;
 	}
@@ -95,6 +130,7 @@ public class TestNGClass implements ReportEntity {
 	/**
 	 * @return the methods
 	 */
+	@Transient
 	public List<TestNGMethod> getTestMethods() {
 		return methods;
 	}
