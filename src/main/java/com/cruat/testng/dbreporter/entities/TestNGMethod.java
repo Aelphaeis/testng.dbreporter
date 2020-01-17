@@ -7,7 +7,7 @@ import org.testng.ITestResult;
 public class TestNGMethod implements ReportEntity {
 	
 	private long id;
-	private String status;
+	private ITestResultStatus status;
 	private boolean retried;
 	private boolean isConfig;
 	private String name;
@@ -16,18 +16,23 @@ public class TestNGMethod implements ReportEntity {
 	private OffsetDateTime start;
 	private OffsetDateTime end;
 	
+	private TestNGClass group;
+	
 	public TestNGMethod() {
 		this(null);
 	}
 	
 	public TestNGMethod(ITestResult itr) {
-		throw new UnsupportedOperationException("Not Implemented");
+		status = ITestResultStatus.valueOf(itr.getStatus());
+		isConfig = !itr.getMethod().isTest();
+	
 	}
+	
 	
 	/**
 	 * @return the status
 	 */
-	public String getStatus() {
+	public ITestResultStatus getStatus() {
 		return status;
 	}
 	
@@ -35,7 +40,7 @@ public class TestNGMethod implements ReportEntity {
 	 * @param status
 	 *            the status to set
 	 */
-	public void setStatus(String status) {
+	public void setStatus(ITestResultStatus status) {
 		this.status = status;
 	}
 	
@@ -158,5 +163,21 @@ public class TestNGMethod implements ReportEntity {
 	 */
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	
+	/**
+	 * @return the group
+	 */
+	public TestNGClass getGroup() {
+		return group;
+	}
+
+	
+	/**
+	 * @param group the group to set
+	 */
+	public void setGroup(TestNGClass group) {
+		this.group = group;
 	}
 }
