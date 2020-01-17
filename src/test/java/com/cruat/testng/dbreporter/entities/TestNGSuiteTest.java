@@ -19,6 +19,7 @@ import org.junit.rules.TemporaryFolder;
 import org.sqlite.JDBC;
 
 import com.cruat.testng.dbreporter.access.GenericDAO;
+import com.cruat.testng.dbreporter.access.ResultDAO;
 import com.cruat.testng.dbreporter.common.ReportDatabaseManager;
 
 public class TestNGSuiteTest {
@@ -34,7 +35,7 @@ public class TestNGSuiteTest {
 	private String connString;
 	private EntityManager em;
 	
-	private GenericDAO<TestNGResults> results;
+	private ResultDAO results;
 	private GenericDAO<TestNGSuite> suites;
 	
 	@Before
@@ -46,7 +47,7 @@ public class TestNGSuiteTest {
 		dbmanager = new ReportDatabaseManager(connString);
 		dbmanager.getLiquibaseRunner().run();
 		em = dbmanager.getEntityManager();
-		results = new GenericDAO<>(em, TestNGResults.class);
+		results = new ResultDAO(em);
 		suites = new GenericDAO<>(em, TestNGSuite.class);
 	}
 	
