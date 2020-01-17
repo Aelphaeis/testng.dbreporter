@@ -14,7 +14,9 @@ public class TestDAO extends GenericDAO<TestNGTest> {
 	@Override
 	public void create(TestNGTest e) {
 		super.create(e);
-		
+
+		//Required because https://hibernate.atlassian.net/browse/HHH-11210
+		//prevents us from using cascade persistence. 
 		ClassDAO classDAO = new ClassDAO(getEntityManager());
 		for (TestNGClass c : e.getClasses()) {
 			classDAO.create(c);
