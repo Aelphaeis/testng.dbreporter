@@ -23,10 +23,17 @@ public enum ITestResultStatus {
 		return value;
 	}
 	
+
+	@Override
+	public String toString() {
+		return name();
+	}
+	
 	public static ITestResultStatus valueOf(int i) {
 		return Arrays.stream(ITestResultStatus.values())
 				.filter(p -> p.getValue() == i)
 				.findAny()
 				.orElseThrow(NoSuchElementException::new);
 	}
+	
 }
