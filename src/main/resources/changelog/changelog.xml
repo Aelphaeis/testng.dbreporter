@@ -86,32 +86,6 @@
 		</createTable>
 	</changeSet>
 	<changeSet id="5" author="morain">
-		<createTable tableName="testng_method_statuses">
-			<column name="id" type="int" autoIncrement="false ">
-				<constraints primaryKey="true" />
-			</column>
-			<column name="name" type="varchar(32)">
-				<constraints nullable="false" />
-			</column>
-		</createTable>
-		<insert tableName="testng_method_statuses">
-			<column name="id" value="1" />
-			<column name="name" value="SUCCESS" />
-		</insert>
-		<insert tableName="testng_method_statuses">
-			<column name="id" value="2" />
-			<column name="name" value="FAILURE" />
-		</insert>
-		<insert tableName="testng_method_statuses">
-			<column name="id" value="3" />
-			<column name="name" value="SKIP" />
-		</insert>
-		<insert tableName="testng_method_statuses">
-			<column name="id" value="4" />
-			<column name="name" value="SUCCESS_PERCENTAGE_FAILURE" />
-		</insert>
-	</changeSet>
-	<changeSet id="6" author="morain">
 		<createTable tableName="testng_methods">
 			<column name="id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" />
