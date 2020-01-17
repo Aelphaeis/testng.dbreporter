@@ -43,7 +43,6 @@ public class TestNGTest implements ReportEntity {
 		this.end = c.getEndDate().toInstant().atOffset(ZoneOffset.UTC);
 		this.start = c.getStartDate().toInstant().atOffset(ZoneOffset.UTC);
 		
-		
 		List<ITestResult> aggregation  = new ArrayList<>();
 		aggregation.addAll(sort(c.getPassedTests()));
 		aggregation.addAll(sort(c.getFailedTests()));
@@ -53,7 +52,6 @@ public class TestNGTest implements ReportEntity {
 		aggregation.addAll(sort(c.getFailedConfigurations()));
 		aggregation.addAll(sort(c.getFailedButWithinSuccessPercentageTests()));
 		
-
 		for(ITestResult result : aggregation) {
 			TestNGClass test = new TestNGClass(result);
 			test.setContext(this);
