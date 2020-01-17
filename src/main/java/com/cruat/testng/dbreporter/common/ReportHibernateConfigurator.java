@@ -13,6 +13,7 @@ import org.hibernate.cfg.Configuration;
 
 import com.cruat.testng.dbreporter.entities.ReportEntity;
 import com.cruat.testng.dbreporter.entities.TestNGClass;
+import com.cruat.testng.dbreporter.entities.TestNGMethod;
 import com.cruat.testng.dbreporter.entities.TestNGResults;
 import com.cruat.testng.dbreporter.entities.TestNGSuite;
 import com.cruat.testng.dbreporter.entities.TestNGTest;
@@ -48,6 +49,7 @@ class ReportHibernateConfigurator{
 		annotated.add(TestNGSuite.class);
 		annotated.add(TestNGTest.class);
 		annotated.add(TestNGClass.class);
+		annotated.add(TestNGMethod.class);
 		return annotated;
 	}
 	
