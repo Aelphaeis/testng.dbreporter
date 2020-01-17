@@ -14,7 +14,7 @@ import org.testng.IResultMap;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 
-import com.cruat.testng.dbreporter.utilities.ITestResultComparator;
+import com.cruat.testng.dbreporter.utilities.ResultComparator;
 
 /**
  * 
@@ -73,7 +73,7 @@ public class TestNGTest implements ReportEntity {
 		return Stream.of(in)
 				.map(IResultMap::getAllResults)
 				.flatMap(Set::stream)
-				.sorted(new ITestResultComparator())
+				.sorted(ResultComparator.INSTANCE)
 				.collect(Collectors.toList());
 	}
 	

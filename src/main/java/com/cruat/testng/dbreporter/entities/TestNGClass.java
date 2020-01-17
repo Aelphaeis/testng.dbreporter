@@ -6,6 +6,8 @@ import java.util.Map.Entry;
 
 import org.testng.ITestResult;
 
+import com.cruat.testng.dbreporter.utilities.ResultComparator;
+
 public class TestNGClass implements ReportEntity {
 	
 	public static final String DEFAULT_PACKAGE_NAME = "[default]";
@@ -33,6 +35,11 @@ public class TestNGClass implements ReportEntity {
 		else {
 			this.name = classname;
 			this.pkgName = DEFAULT_PACKAGE_NAME;
+		}
+		
+		e.getValue().sort(ResultComparator.INSTANCE);
+		for(ITestResult result : e.getValue()) {
+			
 		}
 	}
 	
