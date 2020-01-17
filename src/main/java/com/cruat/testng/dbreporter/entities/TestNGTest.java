@@ -30,7 +30,9 @@ public class TestNGTest implements ReportEntity {
 	}
 	
 	public TestNGTest(ITestContext c) {
-		throw new UnsupportedOperationException("Not Implemented");
+		this.name = c.getName();
+		this.end = c.getEndDate().toInstant().atOffset(ZoneOffset.UTC);
+		this.start = c.getStartDate().toInstant().atOffset(ZoneOffset.UTC);
 	}
 	
 	/**
