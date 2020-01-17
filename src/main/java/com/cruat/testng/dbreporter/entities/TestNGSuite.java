@@ -20,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.testng.ISuite;
 import org.testng.ISuiteResult;
@@ -159,7 +160,8 @@ public class TestNGSuite implements ReportEntity {
 	/**
 	 * @return the contexts
 	 */
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "suite")
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "suite")
+	@Transient
 	public List<TestNGTest> getContexts() {
 		return contexts;
 	}
