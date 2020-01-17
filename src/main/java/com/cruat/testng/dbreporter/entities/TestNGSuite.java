@@ -45,12 +45,11 @@ public class TestNGSuite implements ReportEntity {
 		
 		this.name = suite.getName();
 		
-		for(ISuiteResult suiteResults : suite.getResults().values()) {
+		for (ISuiteResult suiteResults : suite.getResults().values()) {
 			TestNGTest test = new TestNGTest(suiteResults.getTestContext());
 			test.setSuite(this);
 			contexts.add(test);
 		}
-	
 		
 		List<ITestContext> ctxt = Stream.of(suite)
 				.map(ISuite::getResults)
@@ -73,9 +72,8 @@ public class TestNGSuite implements ReportEntity {
 				.map(p -> p.atOffset(ZoneOffset.UTC))
 				.orElseThrow(IllegalArgumentException::new);
 		
-	
-		
 	}
+	
 	/**
 	 * @return the id
 	 */

@@ -54,9 +54,9 @@ public class TestNGResults implements ReportEntity {
 				TestNGSuite ngSuite = new TestNGSuite(suite);
 				ngSuite.setResult(this);
 				this.suites.add(ngSuite);
-				
 			}
 		}
+		
 		total = passed + skipped + failed;
 		
 		if (!suites.isEmpty()) {
