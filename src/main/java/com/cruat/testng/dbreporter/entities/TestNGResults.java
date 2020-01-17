@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -202,7 +201,7 @@ public class TestNGResults implements ReportEntity {
 	/**
 	 * @return the suites
 	 */
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "result")
+	@OneToMany(mappedBy = "result")
 	public List<TestNGSuite> getSuites() {
 		return suites;
 	}
