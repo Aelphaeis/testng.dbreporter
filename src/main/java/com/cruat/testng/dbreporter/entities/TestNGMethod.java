@@ -1,6 +1,9 @@
 package com.cruat.testng.dbreporter.entities;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
+import java.util.stream.LongStream;
 
 import org.testng.ITestResult;
 
@@ -11,23 +14,40 @@ public class TestNGMethod implements ReportEntity {
 	private boolean retried;
 	private boolean isConfig;
 	private String name;
+	private String instanceName;
 	private String description;
-	private String signature;
 	private OffsetDateTime start;
 	private OffsetDateTime end;
 	
 	private TestNGClass group;
 	
 	public TestNGMethod() {
-		this(null);
 	}
 	
 	public TestNGMethod(ITestResult itr) {
+		this();
+		
 		status = ITestResultStatus.valueOf(itr.getStatus());
 		isConfig = !itr.getMethod().isTest();
-	
+		name = itr.getMethod().getMethodName();
+		instanceName = itr.getInstanceName();
+		description = itr.getMethod().getDescription();
+		retried = itr.wasRetried();
+		
+		LongStream.of(itr.getStartMillis())
+				.mapToObj(Date::new)
+				.map(Date::toInstant)
+				.map(p -> p.atOffset(ZoneOffset.UTC))
+				.findFirst()
+				.ifPresent(this::setStart);
+		
+		LongStream.of(itr.getEndMillis())
+				.mapToObj(Date::new)
+				.map(Date::toInstant)
+				.map(p -> p.atOffset(ZoneOffset.UTC))
+				.findFirst()
+				.ifPresent(this::setEnd);
 	}
-	
 	
 	/**
 	 * @return the status
@@ -105,21 +125,6 @@ public class TestNGMethod implements ReportEntity {
 	}
 	
 	/**
-	 * @return the signature
-	 */
-	public String getSignature() {
-		return signature;
-	}
-	
-	/**
-	 * @param signature
-	 *            the signature to set
-	 */
-	public void setSignature(String signature) {
-		this.signature = signature;
-	}
-	
-	/**
 	 * @return the start
 	 */
 	public OffsetDateTime getStart() {
@@ -148,7 +153,6 @@ public class TestNGMethod implements ReportEntity {
 	public void setEnd(OffsetDateTime end) {
 		this.end = end;
 	}
-
 	
 	/**
 	 * @return the id
@@ -156,15 +160,14 @@ public class TestNGMethod implements ReportEntity {
 	public long getId() {
 		return id;
 	}
-
 	
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(long id) {
 		this.id = id;
 	}
-
 	
 	/**
 	 * @return the group
@@ -172,12 +175,27 @@ public class TestNGMethod implements ReportEntity {
 	public TestNGClass getGroup() {
 		return group;
 	}
-
 	
 	/**
-	 * @param group the group to set
+	 * @param group
+	 *            the group to set
 	 */
 	public void setGroup(TestNGClass group) {
 		this.group = group;
+	}
+	
+	/**
+	 * @return the instanceName
+	 */
+	public String getInstanceName() {
+		return instanceName;
+	}
+	
+	/**
+	 * @param instanceName
+	 *            the instanceName to set
+	 */
+	public void setInstanceName(String instanceName) {
+		this.instanceName = instanceName;
 	}
 }
