@@ -1,6 +1,7 @@
 package com.cruat.testng.dbreporter.entities;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import org.testng.ITestContext;
 public class TestNGTest implements ReportEntity {
 	
 	private long id;
-	private int name;
+	private String name;
 	private OffsetDateTime start;
 	private OffsetDateTime end;
 	
@@ -50,7 +51,7 @@ public class TestNGTest implements ReportEntity {
 	/**
 	 * @return the name
 	 */
-	public int getName() {
+	public String getName() {
 		return name;
 	}
 	
@@ -58,7 +59,7 @@ public class TestNGTest implements ReportEntity {
 	 * @param name
 	 *            the name to set
 	 */
-	public void setName(int name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	
