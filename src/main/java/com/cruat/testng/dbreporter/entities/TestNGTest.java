@@ -4,8 +4,15 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.testng.IResultMap;
 import org.testng.ITestContext;
+import org.testng.ITestResult;
+
+import com.cruat.testng.dbreporter.utilities.ITestResultComparator;
 
 /**
  * 
@@ -30,9 +37,36 @@ public class TestNGTest implements ReportEntity {
 	}
 	
 	public TestNGTest(ITestContext c) {
+		this();
+		
 		this.name = c.getName();
 		this.end = c.getEndDate().toInstant().atOffset(ZoneOffset.UTC);
 		this.start = c.getStartDate().toInstant().atOffset(ZoneOffset.UTC);
+		
+		
+		List<ITestResult> aggregation  = new ArrayList<>();
+		aggregation.addAll(sort(c.getPassedTests()));
+		aggregation.addAll(sort(c.getFailedTests()));
+		aggregation.addAll(sort(c.getSkippedTests()));
+		aggregation.addAll(sort(c.getPassedConfigurations()));
+		aggregation.addAll(sort(c.getSkippedConfigurations()));
+		aggregation.addAll(sort(c.getFailedConfigurations()));
+		aggregation.addAll(sort(c.getFailedButWithinSuccessPercentageTests()));
+		
+
+		for(ITestResult result : aggregation) {
+			TestNGClass test = new TestNGClass(result);
+			test.setContext(this);
+			classes.add(test);
+		}
+	}
+	
+	private static List<ITestResult> sort(IResultMap in) {
+		return Stream.of(in)
+				.map(IResultMap::getAllResults)
+				.flatMap(Set::stream)
+				.sorted(new ITestResultComparator())
+				.collect(Collectors.toList());
 	}
 	
 	/**
