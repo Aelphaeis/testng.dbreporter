@@ -17,8 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.testng.IResultMap;
 import org.testng.ITestContext;
@@ -170,7 +170,7 @@ public class TestNGTest implements ReportEntity {
 	/**
 	 * @return the classes
 	 */
-	@Transient
+	@OneToMany(mappedBy = "context")
 	public List<TestNGClass> getClasses() {
 		return classes;
 	}
