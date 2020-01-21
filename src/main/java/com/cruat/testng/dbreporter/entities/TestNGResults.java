@@ -50,11 +50,11 @@ public class TestNGResults implements ReportEntity {
 				passed += context.getPassedTests().size();
 				failed += context.getFailedTests().size();
 				skipped += context.getSkippedTests().size();
-				
-				TestNGSuite ngSuite = new TestNGSuite(suite);
-				ngSuite.setResult(this);
-				this.suites.add(ngSuite);
 			}
+			
+			TestNGSuite ngSuite = new TestNGSuite(suite);
+			ngSuite.setResult(this);
+			this.suites.add(ngSuite);
 		}
 		
 		total = passed + skipped + failed;
