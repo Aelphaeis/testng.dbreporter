@@ -52,8 +52,9 @@ public class TestNGClass implements ReportEntity {
 		}
 		
 		e.getValue().sort(ResultComparator.INSTANCE);
-		for(ITestResult result : e.getValue()) {
-			TestNGMethod method = new TestNGMethod(result);
+		for(int i = 0; i < e.getValue().size(); i++) {
+			TestNGMethod method = new TestNGMethod(e.getValue().get(i));
+			method.setOrder(i + 1);
 			method.setGroup(this);
 			methods.add(method);
 		}

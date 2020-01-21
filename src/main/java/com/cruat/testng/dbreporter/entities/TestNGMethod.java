@@ -1,5 +1,6 @@
 package com.cruat.testng.dbreporter.entities;
 
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
@@ -28,22 +29,24 @@ public class TestNGMethod implements ReportEntity {
 	private String name;
 	private String instanceName;
 	private String description;
+	
+	private int order;
+	private long duration;
 	private OffsetDateTime start;
 	private OffsetDateTime end;
-	
 	private TestNGClass group;
-	
+
 	public TestNGMethod() {}
 	
 	public TestNGMethod(ITestResult itr) {
 		this();
 		
-		status = ITestResultStatus.valueOf(itr.getStatus());
-		isConfig = !itr.getMethod().isTest();
-		name = itr.getMethod().getMethodName();
-		instanceName = itr.getInstanceName();
-		description = itr.getMethod().getDescription();
-		retried = itr.wasRetried();
+		this.status = ITestResultStatus.valueOf(itr.getStatus());
+		this.isConfig = !itr.getMethod().isTest();
+		this.name = itr.getMethod().getMethodName();
+		this.instanceName = itr.getInstanceName();
+		this.description = itr.getMethod().getDescription();
+		this.retried = itr.wasRetried();
 		
 		this.start = new Date(itr.getStartMillis())
 				.toInstant()
@@ -52,12 +55,32 @@ public class TestNGMethod implements ReportEntity {
 		this.end = new Date(itr.getEndMillis())
 				.toInstant()
 				.atOffset(ZoneOffset.UTC);
+		
+		this.duration = Duration.between(start, end).toMillis();
+	}
+	
+	/**
+	 * @return the id
+	 */
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public long getId() {
+		return id;
+	}
+	
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	/**
 	 * @return the status
 	 */
-	@Column(name = "status_id")
+	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
 	public ITestResultStatus getStatus() {
 		return status;
@@ -74,7 +97,7 @@ public class TestNGMethod implements ReportEntity {
 	/**
 	 * @return the retried
 	 */
-	@Column(name = "isRetried")
+	@Column(name = "is_retried")
 	public boolean isRetried() {
 		return retried;
 	}
@@ -90,7 +113,7 @@ public class TestNGMethod implements ReportEntity {
 	/**
 	 * @return the isConfig
 	 */
-	@Column(name = "isConfig")
+	@Column(name = "is_config")
 	public boolean isConfig() {
 		return isConfig;
 	}
@@ -168,21 +191,35 @@ public class TestNGMethod implements ReportEntity {
 	}
 	
 	/**
-	 * @return the id
+	 * @return the duration
 	 */
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public long getId() {
-		return id;
+	@Column(name = "duration")
+	public long getDuration() {
+		return duration;
 	}
 	
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param duration
+	 *            the duration to set
 	 */
-	public void setId(long id) {
-		this.id = id;
+	public void setDuration(long duration) {
+		this.duration = duration;
+	}
+	
+	/**
+	 * @return the order
+	 */
+	@Column(name = "method_order")
+	public int getOrder() {
+		return order;
+	}
+	
+	/**
+	 * @param order
+	 *            the order to set
+	 */
+	public void setOrder(int order) {
+		this.order = order;
 	}
 	
 	/**
@@ -205,6 +242,7 @@ public class TestNGMethod implements ReportEntity {
 	/**
 	 * @return the instanceName
 	 */
+	@Column(name = "instance_name")
 	public String getInstanceName() {
 		return instanceName;
 	}

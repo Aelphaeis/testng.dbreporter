@@ -93,16 +93,22 @@
 			<column name="name" type="varchar(128)">
 				<constraints nullable="false" />
 			</column>
-			<column name="instanceName" type="varchar(128)" />
+			<column name="instance_name" type="varchar(128)" />
 			<!-- not sure about this size. -->
 			<column name="description" type="varchar(512)"/>
-			<column name="status_id" type="int">
+			<column name="status" type="varchar(32)">
 				<constraints nullable="false" />
 			</column>
-			<column name="isRetried" type="boolean">
+			<column name="is_retried" type="boolean">
 				<constraints nullable="false" />
 			</column>
-			<column name="isConfig" type="boolean">
+			<column name="is_config" type="boolean">
+				<constraints nullable="false" />
+			</column>
+			<column name="duration" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="method_order" type="int">
 				<constraints nullable="false" />
 			</column>
 			<column name="start" type="timestamp">
