@@ -95,7 +95,7 @@
 			</column>
 			<column name="instance_name" type="varchar(128)" />
 			<!-- not sure about this size. -->
-			<column name="description" type="varchar(512)"/>
+			<column name="description" type="varchar(512)" />
 			<column name="status" type="varchar(32)">
 				<constraints nullable="false" />
 			</column>
